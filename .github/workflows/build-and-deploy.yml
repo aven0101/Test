@@ -23,10 +23,10 @@ jobs:
         
       - name: Snyk Test
         uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.fac80531-1c4f-4063-a76e-bc90948077b9 }}
         with:
           command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.fac80531-1c4f-4063-a76e-bc90948077b9 }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
