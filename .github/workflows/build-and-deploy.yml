@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - Security-CICD
     tags:
       - 'v*'
   workflow_dispatch:
@@ -13,6 +14,42 @@ on:
         required: true
 
 jobs:
+  Security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Snyk Auth
+        run: snyk auth ${{ secrets.fac80531-1c4f-4063-a76e-bc90948077b9 }}
+      
+      - name: Snyk Test
+        uses: snyk/actions/node@master
+        with:
+          command: test
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run npm audit (high or above)
+        run: npm audit --audit-level=high
+
+      - name: Run test suite
+        run: npm test
+
+      - name: List outdated packages
+        run: npm outdated || true
+
+      - name: Check license compliance
+        run: npx license-checker --summary
+
   build:
     runs-on: ubuntu-latest
     outputs:
