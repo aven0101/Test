@@ -18,11 +18,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Snyk Auth
-        run: snyk auth ${{ secrets.fac80531-1c4f-4063-a76e-bc90948077b9 }}
-      
       - name: Snyk Test
         uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.fac80531-1c4f-4063-a76e-bc90948077b9 }}
         with:
           command: test
 
