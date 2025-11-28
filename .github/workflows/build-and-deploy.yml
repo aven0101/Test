@@ -20,6 +20,7 @@ jobs:
     steps:
       - name: Snyk Test
         uses: snyk/actions/node@master
+        working-directory: psfss-backend-main
         env:
           SNYK_TOKEN: ${{ secrets.fac80531-1c4f-4063-a76e-bc90948077b9 }}
         with:
